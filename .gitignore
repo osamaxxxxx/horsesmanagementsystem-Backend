@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+*.user
+
+# Hold the database password, JWT signing key and seed password. Copy appsettings.Example.json to create them.
+appsettings.Development.json
+appsettings.Production.json
+
+# Deployment server and account for the hosting site.
+Properties/PublishProfiles/

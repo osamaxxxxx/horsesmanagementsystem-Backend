@@ -1,0 +1,65 @@
+@HorseVillage_HostAddress = http://localhost:5006
+# Dev credentials are in appsettings.Development.json (Seed section).
+@username = reporter
+@password = <Seed:AdminPassword>
+
+# @name login
+POST {{HorseVillage_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{ "username": "{{username}}", "password": "{{password}}" }
+
+###
+@token = {{login.response.body.$.token}}
+
+GET {{HorseVillage_HostAddress}}/api/auth/me
+Authorization: Bearer {{token}}
+
+###
+
+GET {{HorseVillage_HostAddress}}/api/plots?search=A-0&status=COMPLETED&sort=serial_asc&page=1&pageSize=100
+Authorization: Bearer {{token}}
+
+###
+
+GET {{HorseVillage_HostAddress}}/api/plots/stats
+Authorization: Bearer {{token}}
+
+###
+
+POST {{HorseVillage_HostAddress}}/api/plots
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "serialNo": 7,
+  "beneficiaryName": "اسم المنتفع",
+  "lotteryDate": "2024-01-05",
+  "contractNo": "CNT-2024-007",
+  "contractExpiryDate": "2029-01-04",
+  "studName": "مربط جديد",
+  "plotNo": "A-107",
+  "status": "ACTIVE"
+}
+
+###
+
+GET {{HorseVillage_HostAddress}}/api/plots/export
+Authorization: Bearer {{token}}
+
+###
+
+GET {{HorseVillage_HostAddress}}/api/users
+Authorization: Bearer {{token}}
+
+###
+
+GET {{HorseVillage_HostAddress}}/api/users/sessions
+Authorization: Bearer {{token}}
+
+###
+
+GET {{HorseVillage_HostAddress}}/api/audit-logs?page=1&pageSize=50
+Authorization: Bearer {{token}}
+
+###
